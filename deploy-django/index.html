@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  Step 1. Install packagesFirst of all, install all packages we’re going to use">
+<meta name="keywords" content="django,deploy,gunicorn,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy Django project with gunicorn and nginx">
+<meta property="og:url" content="https://qweroot.com/deploy-django/index.html">
+<meta property="og:site_name" content="qweroot">
+<meta property="og:description" content="IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  Step 1. Install packagesFirst of all, install all packages we’re going to use">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-05T06:15:47.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deploy Django project with gunicorn and nginx">
+<meta name="twitter:description" content="IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  Step 1. Install packagesFirst of all, install all packages we’re going to use">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Deploy Django project with gunicorn and nginx</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/nginx-server-block-and-ssl/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://qweroot.com/deploy-django/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://qweroot.com/deploy-django/&text=Deploy Django project with gunicorn and nginx"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://qweroot.com/deploy-django/&is_video=false&description=Deploy Django project with gunicorn and nginx"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deploy Django project with gunicorn and nginx&body=Check out this article: https://qweroot.com/deploy-django/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://qweroot.com/deploy-django/&name=Deploy Django project with gunicorn and nginx&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-1-Install-packages"><span class="toc-number">2.</span> <span class="toc-text">Step 1. Install packages</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-2-Setup-Database"><span class="toc-number">3.</span> <span class="toc-text">Step 2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-3-Setup-Python-environment"><span class="toc-number">4.</span> <span class="toc-text">Step 3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-4-Setup-Django-project"><span class="toc-number">5.</span> <span class="toc-text">Step 4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-5-Setup-gunicorn"><span class="toc-number">6.</span> <span class="toc-text">Step 5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-6-Setup-nginx"><span class="toc-number">7.</span> <span class="toc-text">Step 6. Setup nginx</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Deploy Django project with gunicorn and nginx
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">qweroot</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-04T15:00:00.000Z" itemprop="datePublished">2020-02-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/deploy/">deploy</a>, <a class="tag-link" href="/tags/django/">django</a>, <a class="tag-link" href="/tags/gunicorn/">gunicorn</a>, <a class="tag-link" href="/tags/nginx/">nginx</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>In this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx. </p>
+<h1 id="Step-1-Install-packages"><a href="#Step-1-Install-packages" class="headerlink" title="Step 1. Install packages"></a>Step 1. Install packages</h1><p>First of all, install all packages we’re going to use with following command.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx -y</span><br></pre></td></tr></table></figure>
+
+<h1 id="Step-2-Setup-Database"><a href="#Step-2-Setup-Database" class="headerlink" title="Step 2. Setup Database"></a>Step 2. Setup Database</h1><p>After the installation, first thing we need to do is start up the database server(in case of the database server doesn’t automatically start up), and access to the posgres prompt to create a database and user for our django project.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">db setting</span><br><span class="line">postgres=# CREATE DATABASE db_name;</span><br><span class="line">CREATE DATABASE</span><br><span class="line">postgres=# CREATE USER admin WITH PASSWORD 'password';</span><br><span class="line">CREATE ROLE</span><br><span class="line">postgres=# ALTER ROLE admin SET client_encoding TO 'utf8';</span><br><span class="line">ALTER ROLE</span><br><span class="line">postgres=# ALTER ROLE admin SET default_transaction_isolation TO 'read committed';</span><br><span class="line">ALTER ROLE</span><br><span class="line">postgres=# ALTER ROLE admin SET timezone TO 'UST';</span><br><span class="line">ALTER ROLE</span><br><span class="line">postgres=# GRANT ALL PRIVILEGES ON DATABASE db_name TO admin;</span><br><span class="line">GRANT</span><br><span class="line">postgres=# \q</span><br></pre></td></tr></table></figure>
+
+<h1 id="Step-3-Setup-Python-environment"><a href="#Step-3-Setup-Python-environment" class="headerlink" title="Step 3. Setup Python environment"></a>Step 3. Setup Python environment</h1><p>I prefer to use <code>virtualenvwrapper</code> to manage my python virtualenvs, it easy to use and manage than the original python virtualenv program. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pip3 install virtualenvwrapper</span><br></pre></td></tr></table></figure>
+
+<p>And then, we need to add following lines to the .bashrc(or the rc file for whatever shell you use) file, feel free to change the paths if needed.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> virtualenvwrapper settings</span><br><span class="line">export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3</span><br><span class="line">export VIRTUALENVWRAPPER_VIRTUALENV=$HOME/.local/bin/virtualenv</span><br><span class="line">source $HOME/.local/bin/virtualenvwrapper.sh</span><br></pre></td></tr></table></figure>
+
+<p>Source the .bashrc file or restart your shell. Now we can simply run following commands to create a virtualenv.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkvirtualenv env</span><br></pre></td></tr></table></figure>
+
+<p>And activate. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> workon env</span><br></pre></td></tr></table></figure>
+
+<h1 id="Step-4-Setup-Django-project"><a href="#Step-4-Setup-Django-project" class="headerlink" title="Step 4. Setup Django project"></a>Step 4. Setup Django project</h1><p>I think we are not going to talk too much detail about how to initiate a Django project, I assume you already have a ready-to-deply Django project, and we’ll focus on how to create different setting modules for production and debug.</p>
+<p>Now, you have only one setting file which is <code>my_project/my_project/settings.py</code>, and we need to change the structure of the setting modules as follows.</p>
+<p>Run following commands in the root directory of your Django project.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd my_project # cd into the directory of settings.py file</span><br><span class="line"><span class="meta">$</span> mkdir settings # make a new directory for setting modules</span><br><span class="line"><span class="meta">$</span> mv settings.py settings/debug.py # move settings.py to settings directory and rename it to debug.py</span><br><span class="line"><span class="meta">$</span> cp settings/debug.py settings/production.py # copy debug.py to production.py</span><br></pre></td></tr></table></figure>
+
+<p>Now, we have two separate setting modules, and the structure of the setting modules is as follows.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_project/my_project/settings/debug.py</span><br><span class="line">my_project/my_project/settings/production.py</span><br></pre></td></tr></table></figure>
+
+<p>We’ll leave the debug.py as the current state, and focus only on the production.py. </p>
+<p>First, and the most important setting we need to change is <code>DEBUG</code> option, Django set the <code>DEBUG</code> option to <code>True</code> by default, we need to change it to <code>False</code> in production mode as mentioned in the <a href="https://docs.djangoproject.com/en/3.0/ref/settings/#std:setting-DEBUG" target="_blank" rel="noopener">Django Official Document.</a></p>
+<p>And also read the <code>SECRET_KEY</code> from env vaviable instead of hardcode into setting file.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SECRET_KEY = os.environ[<span class="string">'DJANGO_SECRET_KEY'</span>]</span><br></pre></td></tr></table></figure>
+
+<p>Next, setup the database.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.postgresql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'db_name'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'admin'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'password'</span>,</span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'localhost'</span>,</span><br><span class="line">        <span class="string">'PORT'</span>: <span class="number">5432</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Since we’ve changed the path of the setting modules, we also need to change the references to the setting modules. By default, setting module is referenced in two places, <code>manage.py</code> and <code>wsgi.py</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'smartinventory.settings'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The code simply checks that if the system env variable <code>DJANGO_SETTINGS_MODULE</code> is exists, if it doesn’t, set it to <code>smartinventory.settings</code> which is the path of default setting module, and here we need to change the path to <code>smartinventory.settings.debug</code>, this allows us to still use the debug settings module when developing.</p>
+<p>And yes, if we set <code>DJANGO_SETTINGS_MODULE</code> env variable to <code>smartinventory.settings.production</code> in our live server, Django will read the productin setting module as default.</p>
+<h1 id="Step-5-Setup-gunicorn"><a href="#Step-5-Setup-gunicorn" class="headerlink" title="Step 5. Setup gunicorn"></a>Step 5. Setup gunicorn</h1><p>Install gunicorn with pip.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pip install gunicorn</span><br></pre></td></tr></table></figure>
+
+<p>And create a gunicorn service file.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/systemd/system/gunicorn.service</span><br></pre></td></tr></table></figure>
+
+<p>Paste in following content.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=gunicorn daemon</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=username</span><br><span class="line">Group=www-data</span><br><span class="line">WorkingDirectory=/path/to/django/project/root/directory</span><br><span class="line">EnvironmentFile=/path/to/envs/file</span><br><span class="line">ExecStart=/home/username/.virtualenvs/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/path/to/django/project/root/directory/gunicorn.sock my_project.wsgi:application</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>Note that the <code>EnvironmentFile=/path/to/envs/file</code> option, somehow, gunicorn can’t read the system env variables properly in my ubuntu server, so the fix for this is to create a file containing the env variables and set the <code>EnvironmentFile</code> option in gunicorn service file, and the content of the envs file are as follows.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DJANGO_SETTINGS_MODULE=&apos;smartinventory.settings.production&apos;</span><br><span class="line">DJANGO_SECRET_KEY=&apos;txx*zi!vuqgutvg=@2-drm12+erws*e304_baqkb*y*fnu$@82&apos;</span><br></pre></td></tr></table></figure>
+
+<p>Start and enable gunicorn service.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start gunicorn</span><br><span class="line">$ sudo systemctl enable gunicorn</span><br></pre></td></tr></table></figure>
+
+<h1 id="Step-6-Setup-nginx"><a href="#Step-6-Setup-nginx" class="headerlink" title="Step 6. Setup nginx"></a>Step 6. Setup nginx</h1><p>Since we’ve bind our Django project to a unix socket with gunicorn, the only thing we need to do with nginx is to set a proxy to the unix socket. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name example.com;</span><br><span class="line"></span><br><span class="line">    location = /favicon.ico &#123; access_log off; log_not_found off; &#125;</span><br><span class="line">    location /static/ &#123;</span><br><span class="line">        root /path/to/django/project/root/directory;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include proxy_params;</span><br><span class="line">        proxy_pass http://unix:/path/to/django/project/root/directory/gunicorn.sock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Last, restart the nginx service.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>That’s it, now type the domain name(or IP) in your browser, you should see the index page of your Django project.<br>congratulations! :\</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-1-Install-packages"><span class="toc-number">2.</span> <span class="toc-text">Step 1. Install packages</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-2-Setup-Database"><span class="toc-number">3.</span> <span class="toc-text">Step 2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-3-Setup-Python-environment"><span class="toc-number">4.</span> <span class="toc-text">Step 3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-4-Setup-Django-project"><span class="toc-number">5.</span> <span class="toc-text">Step 4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-5-Setup-gunicorn"><span class="toc-number">6.</span> <span class="toc-text">Step 5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Step-6-Setup-nginx"><span class="toc-number">7.</span> <span class="toc-text">Step 6. Setup nginx</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://qweroot.com/deploy-django/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://qweroot.com/deploy-django/&text=Deploy Django project with gunicorn and nginx"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://qweroot.com/deploy-django/&is_video=false&description=Deploy Django project with gunicorn and nginx"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deploy Django project with gunicorn and nginx&body=Check out this article: https://qweroot.com/deploy-django/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://qweroot.com/deploy-django/&title=Deploy Django project with gunicorn and nginx"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://qweroot.com/deploy-django/&name=Deploy Django project with gunicorn and nginx&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 qweroot
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
