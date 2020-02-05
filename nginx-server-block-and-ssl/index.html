@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="#0 Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt u">
-<meta name="keywords" content="linux,nginx,server block,ssl,https">
+    <meta name="description" content="#0. Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt">
+<meta name="keywords" content="nginx,linux,server block,ssl,https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to setup nginx server blocks and SSL certificate with Let&#39;s Encrypt">
 <meta property="og:url" content="https://qweroot.com/nginx-server-block-and-ssl/index.html">
 <meta property="og:site_name" content="qweroot">
-<meta property="og:description" content="#0 Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt u">
+<meta property="og:description" content="#0. Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-05T06:36:17.367Z">
+<meta property="og:updated_time" content="2020-02-05T06:41:54.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to setup nginx server blocks and SSL certificate with Let&#39;s Encrypt">
-<meta name="twitter:description" content="#0 Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt u">
+<meta name="twitter:description" content="#0. Install nginxFirst of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide. 12$ sudo apt">
     
     
         
@@ -99,7 +99,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Install-nginx"><span class="toc-number">1.</span> <span class="toc-text">#0 Install nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Create-root-directory"><span class="toc-number">1.1.</span> <span class="toc-text">#1 Create root directory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Create-server-block-config-file"><span class="toc-number">1.1.1.</span> <span class="toc-text">#2 Create server block config file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Setup-SSL-certificate"><span class="toc-number">1.1.2.</span> <span class="toc-text">#4 Setup SSL certificate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conclusion"><span class="toc-number">1.1.3.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Install-nginx"><span class="toc-number">1.</span> <span class="toc-text">#0. Install nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Create-root-directory"><span class="toc-number">2.</span> <span class="toc-text">#1. Create root directory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Create-server-block-config-file"><span class="toc-number">3.</span> <span class="toc-text">#2. Create server block config file</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-SSL-certificate"><span class="toc-number">4.</span> <span class="toc-text">#3. Setup SSL certificate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.0.1.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -143,19 +143,19 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="0-Install-nginx"><a href="#0-Install-nginx" class="headerlink" title="#0 Install nginx"></a>#0 Install nginx</h1><p>First of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide.</p>
+    <h1 id="0-Install-nginx"><a href="#0-Install-nginx" class="headerlink" title="#0. Install nginx"></a>#0. Install nginx</h1><p>First of all, let’s install nginx server on our linux. The commands will be vary depends on what distribution you are using, and we’re going to use Ubuntu in this guide.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install nginx -y</span><br></pre></td></tr></table></figure>
 
 <p>Now we can start nginx service with following commands, and enable it by default.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start nginx</span><br><span class="line">$ sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
 
 <p>Now type the IP of the host in the browser, you should see the default nginx index page.</p>
-<h2 id="1-Create-root-directory"><a href="#1-Create-root-directory" class="headerlink" title="#1 Create root directory"></a>#1 Create root directory</h2><p>The two domain names we are going to use in this guide is <em>example.com</em> and <em>demo.com</em> for demonstration purpose, and we’ll create <strong>block config file</strong> for each domain respectively. </p>
+<h1 id="1-Create-root-directory"><a href="#1-Create-root-directory" class="headerlink" title="#1. Create root directory"></a>#1. Create root directory</h1><p>The two domain names we are going to use in this guide is <em>example.com</em> and <em>demo.com</em> for demonstration purpose, and we’ll create <strong>block config file</strong> for each domain respectively. </p>
 <p>Let’s create two root directories in <code>/var/www/</code> for both of our domains.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># create directories</span><br><span class="line">$ sudo mkdir -p /var/www/example.com/public_html</span><br><span class="line">$ sudo mkdir -p /var/www/demo.com/public_html</span><br><span class="line"></span><br><span class="line"># create index file, put some html code into these files</span><br><span class="line">$ sudo touch /var/www/example.com/public_html/index.html</span><br><span class="line">$ sudo touch /var/www/demo.com/public_html/index.html</span><br><span class="line"></span><br><span class="line"># finally change the ownership of these directories</span><br><span class="line">$ sudo chown -R www-data:www-data /var/www/example.com/</span><br><span class="line">$ sudo chown -R www-data:www-data /var/www/demo.com/</span><br></pre></td></tr></table></figure>
 
 <p>You should put some html contents into the both index files to recognize each site when testing, we’re not going to cover such details.</p>
-<h3 id="2-Create-server-block-config-file"><a href="#2-Create-server-block-config-file" class="headerlink" title="#2 Create server block config file"></a>#2 Create server block config file</h3><p>Now it’s time to create nginx server block config files, just copy nginx default server block config file for each domain. </p>
+<h1 id="2-Create-server-block-config-file"><a href="#2-Create-server-block-config-file" class="headerlink" title="#2. Create server block config file"></a>#2. Create server block config file</h1><p>Now it’s time to create nginx server block config files, just copy nginx default server block config file for each domain. </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/example.com</span><br><span class="line"><span class="meta">$</span> sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/demo.com</span><br></pre></td></tr></table></figure>
 
 <p>At the end of the <code>/etc/nginx/sites-available/example.com</code> file, you should see a server block for <em>exmaple.com</em> which commented out by default, we’re going to use this block for our sites. Uncomment the said block by removing the # of each line and delete all other content, also we need to change the root directory to the directory we created above and include ssl config file. The block will finally looks like this. </p>
@@ -164,7 +164,7 @@
 <p>And this is <code>/etc/nginx/sites-available/example.com</code> for domain <em>demo.com</em>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	listen [::]:80;</span><br><span class="line"></span><br><span class="line">	listen 443 ssl;</span><br><span class="line">	listen [::]:443 ssl;</span><br><span class="line">	include snippets/demo-ssl.conf;</span><br><span class="line"></span><br><span class="line">	server_name demo.com;</span><br><span class="line"></span><br><span class="line">	root /var/www/demo.com/public_html;</span><br><span class="line">	index index.html;</span><br><span class="line"></span><br><span class="line">	location / &#123;</span><br><span class="line">		try_files $uri $uri/ =404;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-Setup-SSL-certificate"><a href="#4-Setup-SSL-certificate" class="headerlink" title="#4 Setup SSL certificate"></a>#4 Setup SSL certificate</h3><p>We’ve specified the SSL certificate path for our domain, but we don’t have the actual SSL certificate in the path yet.</p>
+<h1 id="3-Setup-SSL-certificate"><a href="#3-Setup-SSL-certificate" class="headerlink" title="#3. Setup SSL certificate"></a>#3. Setup SSL certificate</h1><p>We’ve specified the SSL certificate path for our domain, but we don’t have the actual SSL certificate in the path yet.</p>
 <p>First, we need to install <strong>certbot</strong> package to create SSL certificate.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:certbot/certbot</span><br><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install python-certbot-nginx -y</span><br></pre></td></tr></table></figure>
 
@@ -214,7 +214,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Install-nginx"><span class="toc-number">1.</span> <span class="toc-text">#0 Install nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Create-root-directory"><span class="toc-number">1.1.</span> <span class="toc-text">#1 Create root directory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Create-server-block-config-file"><span class="toc-number">1.1.1.</span> <span class="toc-text">#2 Create server block config file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Setup-SSL-certificate"><span class="toc-number">1.1.2.</span> <span class="toc-text">#4 Setup SSL certificate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conclusion"><span class="toc-number">1.1.3.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Install-nginx"><span class="toc-number">1.</span> <span class="toc-text">#0. Install nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Create-root-directory"><span class="toc-number">2.</span> <span class="toc-text">#1. Create root directory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Create-server-block-config-file"><span class="toc-number">3.</span> <span class="toc-text">#2. Create server block config file</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-SSL-certificate"><span class="toc-number">4.</span> <span class="toc-text">#3. Setup SSL certificate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.0.1.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
