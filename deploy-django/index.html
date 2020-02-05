@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="#0 IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
+    <meta name="description" content="#0. IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
 <meta name="keywords" content="django,deploy,gunicorn,nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deploy Django project with gunicorn and nginx">
 <meta property="og:url" content="https://qweroot.com/deploy-django/index.html">
 <meta property="og:site_name" content="qweroot">
-<meta property="og:description" content="#0 IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
+<meta property="og:description" content="#0. IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-05T06:44:32.957Z">
+<meta property="og:updated_time" content="2020-02-05T06:45:41.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deploy Django project with gunicorn and nginx">
-<meta name="twitter:description" content="#0 IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
+<meta name="twitter:description" content="#0. IntroductionIn this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx.  #1. Install packagesFirst of all, install all packages we’re going to use">
     
     
         
@@ -99,7 +99,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">#0 Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-packages"><span class="toc-number">2.</span> <span class="toc-text">#1. Install packages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Setup-Database"><span class="toc-number"></span> <span class="toc-text">#2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-Python-environment"><span class="toc-number"></span> <span class="toc-text">#3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Setup-Django-project"><span class="toc-number"></span> <span class="toc-text">#4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Setup-gunicorn"><span class="toc-number"></span> <span class="toc-text">#5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Setup-nginx"><span class="toc-number"></span> <span class="toc-text">#6. Setup nginx</span></a>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">#0. Introduction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-packages"><span class="toc-number"></span> <span class="toc-text">#1. Install packages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Setup-Database"><span class="toc-number"></span> <span class="toc-text">#2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-Python-environment"><span class="toc-number"></span> <span class="toc-text">#3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Setup-Django-project"><span class="toc-number"></span> <span class="toc-text">#4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Setup-gunicorn"><span class="toc-number"></span> <span class="toc-text">#5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Setup-nginx"><span class="toc-number"></span> <span class="toc-text">#6. Setup nginx</span></a>
     </div>
   </span>
 </div>
@@ -143,7 +143,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="0-Introduction"><a href="#0-Introduction" class="headerlink" title="#0 Introduction"></a>#0 Introduction</h2><p>In this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx. </p>
+    <h3 id="0-Introduction"><a href="#0-Introduction" class="headerlink" title="#0. Introduction"></a>#0. Introduction</h3><p>In this article, we are going to talk about how to deploy Django project with postgresql, gunicorn and nginx. </p>
 <h2 id="1-Install-packages"><a href="#1-Install-packages" class="headerlink" title="#1. Install packages"></a>#1. Install packages</h2><p>First of all, install all packages we’re going to use with following command.</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx -y</span><br></pre></td></tr></table></figure>
 
@@ -228,7 +228,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">#0 Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-packages"><span class="toc-number">2.</span> <span class="toc-text">#1. Install packages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Setup-Database"><span class="toc-number"></span> <span class="toc-text">#2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-Python-environment"><span class="toc-number"></span> <span class="toc-text">#3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Setup-Django-project"><span class="toc-number"></span> <span class="toc-text">#4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Setup-gunicorn"><span class="toc-number"></span> <span class="toc-text">#5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Setup-nginx"><span class="toc-number"></span> <span class="toc-text">#6. Setup nginx</span></a>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">#0. Introduction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-packages"><span class="toc-number"></span> <span class="toc-text">#1. Install packages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Setup-Database"><span class="toc-number"></span> <span class="toc-text">#2. Setup Database</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Setup-Python-environment"><span class="toc-number"></span> <span class="toc-text">#3. Setup Python environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Setup-Django-project"><span class="toc-number"></span> <span class="toc-text">#4. Setup Django project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Setup-gunicorn"><span class="toc-number"></span> <span class="toc-text">#5. Setup gunicorn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Setup-nginx"><span class="toc-number"></span> <span class="toc-text">#6. Setup nginx</span></a>
     </div>
 
     <div id="share-footer" style="display: none">
